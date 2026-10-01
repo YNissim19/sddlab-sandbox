@@ -12,8 +12,9 @@ export function getStatus(id, hasSession) {
   if (!hasSession) return { code: 401, body: { message: 'No autenticado' } };
   const inst = instances.get(id);
   if (!inst) return { code: 404, body: { message: 'Instancia no encontrada' } };
-  if (inst.pausada) return { code: 200, body: { id, status: 'EN_PAUSA' } };
-  const status = inst.activa ? inst.status : 'DESCONECTADA';
+  // spec 002: la desactivación tiene prioridad sobre la pausa.
+  if (!inst.activa) return { code: 200, body: { id, status: 'DESCONECTADA' } };
+  const status = inst.pausada ? 'EN_PAUSA' : inst.status;
   return { code: 200, body: { id, status } };
 }
 export { STATUSES };
