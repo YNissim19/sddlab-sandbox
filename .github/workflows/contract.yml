@@ -1,0 +1,12 @@
+name: contract
+on: [pull_request]
+jobs:
+  compliance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Spec presente para la clave Jira de la rama
+        run: test -f specs/001-estado-instancia/spec.md
+      - run: npm test
