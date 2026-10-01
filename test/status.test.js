@@ -19,3 +19,10 @@ test('Caso borde: instancia desactivada devuelve DESCONECTADA, no error', () => 
 test('Contrato: status pertenece al conjunto permitido', () => {
   assert.ok(STATUSES.includes(getStatus(7, true).body.status));
 });
+
+test('Spec 002 CA1: activa y pausada devuelve EN_PAUSA', () => {
+  assert.equal(getStatus(9, true).body.status, 'EN_PAUSA');
+});
+test('Spec 002 CA2: pausada y desactivada devuelve DESCONECTADA', () => {
+  assert.equal(getStatus(10, true).body.status, 'DESCONECTADA');
+});
